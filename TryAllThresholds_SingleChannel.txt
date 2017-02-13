@@ -1,37 +1,38 @@
 macro "AllThresholds_NoStack_G2" /*This line defines the name of the macro. It is possible to have 
 									more than one macro per text file and becomes important when 
-									installing the macro. The macro that follows is incased in
-									square brackets*/
-	//Open image before running the macro
+									installing the macro. The macro that follows is encased in
+									curly brackets*/
+									
+//Open image before running the macro
 
 {
 	
-output = getDirectory("Select file for output");
-name=getTitle()
+	output = getDirectory("Select directory for output");
+	name=getTitle()
 
 	//Re-name the image for easy manipulation
-		rename("IMAGE_BASE");
+		rename("IMAGE_BASE"); //I find this easier and more reliable than using the name + the window identifier
 			saveAs(output + name);
 		
 	run("Set Measurements...", "area redirect=None decimal=9");	
 		
 	//Start repeated code
 
-	selectWindow("IMAGE_BASE");	
-	run("Duplicate...", "title=IMAGE_WORKING duplicate");
-		
+		selectWindow("IMAGE_BASE");	
+		run("Duplicate...", "title=IMAGE_WORKING duplicate");
 		run("Original Scale");
+		
 		selectWindow("IMAGE_BASE");
 			close();
+			
 		selectWindow("IMAGE_WORKING");
-
 		run("32-bit");
 		
 		//Thresholds:
 			//Default
 		
-			algorithm=newArray("Default", "Huang", "Intermodes", "IsoData", "IJ_IsoData", "Li", "MaxEntropy", "Mean", "MinError", "Minimum", "Otsu", "Percentile", "RenyiEntropy", "Shanbhag", "Triangle", "Yen")
-			//n=16
+			algorithm=newArray("Default", "Huang", "Intermodes", "IsoData", "IJ_IsoData", "Li", "MaxEntropy", "Mean", "MinError", "Minimum", "Moments", "Otsu", "Percentile", "RenyiEntropy", "Shanbhag", "Triangle", "Yen")
+			//n=17
 		
 		for (i=0; i<algorithm.length; i++){
 		rename("IMAGE_WORKING1");
